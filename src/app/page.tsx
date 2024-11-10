@@ -137,11 +137,7 @@ export default function Home() {
                 console.log("Full item object:", item);
                 const entities =
                   item?.list_of_entities || item["list_of_entities"];
-                if (entities) {
-                  console.log("List of entities:", entities);
-                } else {
-                  console.log("List of entities is undefined or empty");
-                }
+
                 return (
                   <div className="mt-2" key={index}>
                     <MainDisclosure
