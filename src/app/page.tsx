@@ -103,8 +103,9 @@ export default function Home() {
               />
             ) : outputType === "text" ? (
               responseData?.map((item, index) => {
-                console.log(item?.list_of_entities);
+                console.log("Full item object:", item);
 
+                console.log("List of entities:", item["list_of_entities"]);
                 return (
                   <MainDisclosure
                     key={index}

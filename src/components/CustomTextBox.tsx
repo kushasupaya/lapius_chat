@@ -1,12 +1,7 @@
 "use client";
 import { PhotoIcon, XMarkIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
-import {
-  FieldError,
-  FieldErrors,
-  UseFormRegister,
-  UseFormSetValue,
-} from "react-hook-form";
+import { FieldErrors, UseFormRegister, UseFormSetValue } from "react-hook-form";
 import { LapiusFormData } from "./types";
 
 type CustomTextBoxProps = {
@@ -15,6 +10,7 @@ type CustomTextBoxProps = {
   error: FieldErrors<LapiusFormData>;
 };
 const CustomTextBox = ({ register, setValue, error }: CustomTextBoxProps) => {
+  console.log(error);
   const [image, setImage] = useState<string | null>(null);
   const [text, setText] = useState<string>("");
 
