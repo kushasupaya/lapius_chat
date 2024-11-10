@@ -133,34 +133,51 @@ export default function Home() {
                 Upload an image or enter your medical text
               </div>
             ) : outputType === "text" ? (
-              responseData?.map((item, index) => {
-                console.log("Full item object:", item);
-                const entities =
-                  item?.list_of_entities || item["list_of_entities"];
+              <div>
+                {/* Conditionally display the heading if responseData exists */}
+                {responseData && responseData.length > 0 && (
+                  <h2 className="text-lg font-semibold mb-4">
+                    Suggested{" "}
+                    <span className="text-[#68B944] font-bold">ICD-10-CM</span>{" "}
+                    codes
+                  </h2>
+                )}
 
-                return (
-                  <div className="mt-2" key={index}>
-                    <MainDisclosure
-                      heading={entities?.[0]?.icd10 || "No ICD-10 Code"}
-                      description={
-                        entities?.[0]?.supported_evidence ||
-                        "No description available"
-                      }
-                    >
-                      <MiniDisclosure heading="Other codes">
-                        {entities?.slice(1).map((entity, i) => (
-                          <div key={i} className="mt-2">
-                            <div className="font-semibold">{entity?.icd10}</div>
-                            <div className="text-gray-600">
-                              {entity?.supported_evidence}
+                {responseData?.map((item, index) => {
+                  console.log("Full item object:", item);
+                  const entities =
+                    item?.list_of_entities || item["list_of_entities"];
+                  if (entities) {
+                    console.log("List of entities:", entities);
+                  } else {
+                    console.log("List of entities is undefined or empty");
+                  }
+                  return (
+                    <div className="mt-2" key={index}>
+                      <MainDisclosure
+                        heading={entities?.[0]?.icd10 || "No ICD-10 Code"}
+                        description={
+                          entities?.[0]?.supported_evidence ||
+                          "No description available"
+                        }
+                      >
+                        <MiniDisclosure heading="Other codes">
+                          {entities?.slice(1).map((entity, i) => (
+                            <div key={i} className="mt-2">
+                              <div className="font-semibold">
+                                {entity?.icd10}
+                              </div>
+                              <div className="text-gray-600">
+                                {entity?.supported_evidence}
+                              </div>
                             </div>
-                          </div>
-                        ))}
-                      </MiniDisclosure>
-                    </MainDisclosure>
-                  </div>
-                );
-              })
+                          ))}
+                        </MiniDisclosure>
+                      </MainDisclosure>
+                    </div>
+                  );
+                })}
+              </div>
             ) : (
               <div>
                 {medicalCodes && medicalCodes.length > 0 && (
