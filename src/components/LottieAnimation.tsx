@@ -31,7 +31,7 @@ const LottieAnimation: React.FC<LottieAnimationProps> = ({
   //     }
   //   }, [isAnimating]);
   const headingText = isAnimating
-    ? "Click analyze to get the GenAI output"
+    ? "Analyzing your input. Please be patient!"
     : "GenAI Output!";
   return (
     <div>
