@@ -7,9 +7,9 @@ import { ChevronDownIcon } from "@heroicons/react/16/solid";
 
 interface MiniDisclosureProps {
   heading: string;
-  description: string;
+  children?: React.ReactNode;
 }
-const MiniDisclosure = ({ heading, description }: MiniDisclosureProps) => {
+const MiniDisclosure = ({ heading, children }: MiniDisclosureProps) => {
   return (
     <Disclosure as="div" className="space-x-4 p-2">
       <DisclosureButton className="group flex w-full text-[#4B8F2C] items-center hover:text-green-500">
@@ -17,7 +17,7 @@ const MiniDisclosure = ({ heading, description }: MiniDisclosureProps) => {
         {heading}
       </DisclosureButton>
       <DisclosurePanel className="text-gray-500 bg-white border-green-200 border rounded-md p-2 text-left mt-1.5">
-        {description}
+        {children}
       </DisclosurePanel>
     </Disclosure>
   );

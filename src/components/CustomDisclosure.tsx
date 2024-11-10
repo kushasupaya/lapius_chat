@@ -16,7 +16,7 @@ const MainDisclosure = ({
   description,
 }: MainDisclosureProps) => {
   return (
-    <div className="sm:w-full w-[270px] bg-[#C9EABA4F] rounded-md  border border-green-200">
+    <div className="sm:w-full w-[270px] bg-[#C9EABA4F] rounded-md  border border-green-200 ">
       <div className="mx-auto w-full max-w-md">
         <Disclosure as="div">
           {({ open }) => (

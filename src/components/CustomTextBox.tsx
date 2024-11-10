@@ -1,14 +1,20 @@
 "use client";
 import { PhotoIcon, XMarkIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
-import { UseFormRegister, UseFormSetValue } from "react-hook-form";
+import {
+  FieldError,
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+} from "react-hook-form";
 import { LapiusFormData } from "./types";
 
 type CustomTextBoxProps = {
   register: UseFormRegister<LapiusFormData>;
   setValue: UseFormSetValue<LapiusFormData>;
+  error: FieldErrors<LapiusFormData>;
 };
-const CustomTextBox = ({ register, setValue }: CustomTextBoxProps) => {
+const CustomTextBox = ({ register, setValue, error }: CustomTextBoxProps) => {
   const [image, setImage] = useState<string | null>(null);
   const [text, setText] = useState<string>("");
 
@@ -18,8 +24,13 @@ const CustomTextBox = ({ register, setValue }: CustomTextBoxProps) => {
       const reader = new FileReader();
       reader.onload = () => {
         const result = reader.result as string;
+        const base64String = result.replace(
+          /^data:image\/[a-zA-Z]+;base64,/,
+          ""
+        );
+
         setImage(result);
-        setValue("image", result);
+        setValue("image", base64String);
       };
       reader.readAsDataURL(file);
     }
@@ -28,6 +39,7 @@ const CustomTextBox = ({ register, setValue }: CustomTextBoxProps) => {
 
   const handleTextChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(event.target.value);
+    setValue("image", null);
   };
 
   const removeImage = () => {
@@ -44,7 +56,7 @@ const CustomTextBox = ({ register, setValue }: CustomTextBoxProps) => {
         <button
           type="button"
           onClick={() => document.getElementById("fileInput")?.click()}
-          className="flex bg-green-500 text-white px-2 py-2 rounded-md text-sm"
+          className="flex bg-[#68B944] text-white px-2 py-2 rounded-md text-sm"
         >
           Upload Image <PhotoIcon className="h-5 w-5 ml-2" />
         </button>
@@ -58,13 +70,16 @@ const CustomTextBox = ({ register, setValue }: CustomTextBoxProps) => {
         />
       </div>
 
-      <p className="text-gray-600 mb-4 text-left">
-        Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia
-        deserunt mollit anim id est laborum.
+      <p className="text-gray-600 mb-4 text-left mt-1">
+        Write your clinical note here. You can also upload an image.
       </p>
       {image ? (
         <div className="relative">
-          <img src={image} alt="Uploaded" className="w-full rounded-md mb-2" />
+          <img
+            src={image}
+            alt="Uploaded"
+            className="w-full h-[320px] rounded-md mb-2"
+          />
           <button
             type="button"
             onClick={removeImage}
@@ -75,7 +90,9 @@ const CustomTextBox = ({ register, setValue }: CustomTextBoxProps) => {
         </div>
       ) : (
         <textarea
-          {...register("text")}
+          {...register("text", {
+            required: "Please enter some text in the note.",
+          })}
           value={text}
           onChange={handleTextChange}
           className="w-full p-4 border rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-green-500"

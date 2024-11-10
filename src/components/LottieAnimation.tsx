@@ -30,7 +30,9 @@ const LottieAnimation: React.FC<LottieAnimationProps> = ({
   //       animationRef.current.stop();
   //     }
   //   }, [isAnimating]);
-  const headingText = isAnimating ? "Analyzing..." : "GenAI Output!";
+  const headingText = isAnimating
+    ? "Click analyze to get the GenAI output"
+    : "GenAI Output!";
   return (
     <div>
       <Player autoplay loop src={src} className={className} />
