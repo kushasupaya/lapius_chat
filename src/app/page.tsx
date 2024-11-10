@@ -7,7 +7,6 @@ import {
 } from "@/components";
 import {
   LapiusFormData,
-  ClinicalResponse,
   ClinicalResult,
   ImageMedicalCode,
 } from "@/components/types";
@@ -136,10 +135,10 @@ export default function Home() {
               <div>
                 {/* Conditionally display the heading if responseData exists */}
                 {responseData && responseData.length > 0 && (
-                  <h2 className="text-lg font-semibold mb-4">
+                  <h2 className="text-left  mb-4">
                     Suggested{" "}
                     <span className="text-[#68B944] font-bold">ICD-10-CM</span>{" "}
-                    codes
+                    codes:
                   </h2>
                 )}
 
@@ -153,7 +152,7 @@ export default function Home() {
                     console.log("List of entities is undefined or empty");
                   }
                   return (
-                    <div className="mt-2" key={index}>
+                    <div className="mt-4" key={index}>
                       <MainDisclosure
                         heading={entities?.[0]?.icd10 || "No ICD-10 Code"}
                         description={
@@ -182,13 +181,13 @@ export default function Home() {
               <div>
                 {medicalCodes && medicalCodes.length > 0 && (
                   <h2 className="text-lg mb-4 text-left">
-                    Your parsed image is below
+                    Suggested Medical Codes:
                   </h2>
                 )}
 
                 {/* Render the parsed medical codes */}
                 {medicalCodes?.map((item, index) => (
-                  <div className="mt-2" key={index}>
+                  <div className="mt-4" key={index}>
                     <MainDisclosure
                       heading={`${item.codeType} Code: ${item.code}`}
                       description={item.description}
