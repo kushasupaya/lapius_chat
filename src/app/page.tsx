@@ -5,15 +5,25 @@ import {
   MainDisclosure,
   MiniDisclosure,
 } from "@/components";
+import { LapiusFormData } from "@/components/types";
 import Image from "next/image";
 import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
+  const { register, handleSubmit, setValue } = useForm<LapiusFormData>();
 
-  const handleAnalyze = () => {
+  // const handleAnalyze = () => {
+  //   setIsLoading(true);
+  //   setTimeout(() => setIsLoading(false), 2000);
+  // };
+
+  const onSubmit: SubmitHandler<LapiusFormData> = (data) => {
     setIsLoading(true);
     setTimeout(() => setIsLoading(false), 2000);
+    console.log("Form submitted with data:", data);
+    // Handle analyze logic here
   };
   return (
     <div>
@@ -27,10 +37,21 @@ export default function Home() {
           />
         </div>
         <div className="flex justify-center items-center gap-6 mt-12">
-          <div className="w-[500px] h-[500px]">
-            <CustomTextBox onAnalyze={handleAnalyze} />
+          <div className="w-[500px] h-[550px] bg-white rounded-lg shadow-lg">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="container mx-auto p-8"
+            >
+              <CustomTextBox register={register} setValue={setValue} />
+              <button
+                type="submit"
+                className="w-1/4 mt-4 float-right py-2 bg-black text-white font-semibold rounded-md hover:bg-gray-800 transition"
+              >
+                Analyze
+              </button>
+            </form>
           </div>
-          <div className="border rounded-md bg-white w-[500px] h-[500px] p-6 ">
+          <div className="border rounded-md bg-white w-[500px] h-[550px] p-6 ">
             {isLoading ? (
               <LottieAnimation
                 src="/outputlot.json"
